@@ -33,9 +33,9 @@ const server = app.listen(process.env.PORT || 8000, () => {
 const NODE_ENV = process.env.NODE_ENV;
 let dbUri = '';
 
-if(NODE_ENV === 'production') dbUri = 'mongodb://localhost:27017/advertDB';
+if(NODE_ENV === 'production') dbUri = 'url to remote db';
 else if(NODE_ENV === 'test') dbUri = 'mongodb://localhost:27017/advertDBtest';
-else dbUri = `mongodb+srv://AdminxD:${process.env.DB_PASS}@cluster0.sdxou7a.mongodb.net/AdvertDB?retryWrites=true&w=majority`;
+else dbUri = 'mongodb://localhost:27017/advertDB';
 
 mongoose.connect(dbUri, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
