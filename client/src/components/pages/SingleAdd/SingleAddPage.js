@@ -46,7 +46,7 @@ const SingleAddPage = () => {
                 <Card.Text>Price: {data.price}</Card.Text>
                 <Card.Text>Content: {data.content}</Card.Text>
                 <Card.Text>Published: {data.publish_date}</Card.Text>
-                <Card.Text>Seller: {data.user}</Card.Text>
+                <Card.Text>Seller: {data.seller}</Card.Text>
                 {user && (
                   <div>
                       <Button variant="primary" onClick={handleEditNavigate}>Edit</Button>
