@@ -1,11 +1,11 @@
-
+import React from 'react';
+import { Container } from 'react-bootstrap';
 
 const Footer = () => {
-
     return (
-        <div>
-            <p>Footer</p>
-        </div>
+        <Container fluid className="footer fixed-bottom bg-light text-center py-2">
+            <p className="text-muted">Copyright &copy; 2023</p>
+        </Container>
     );
 };
 

@@ -53,7 +53,7 @@ exports.postAdd = async (req, res) => {
                 (escapedTitle.length >= 10 && escapedTitle.length <= 50) &&
                 (escapedContent.length >= 20 && escapedContent.length <= 1000)
             ) {
-                const newAdd = new Advertisement({ title: escapedTitle, content: escapedContent, publish_date: escapedDate, photo: req.file.filename, price: escapedPrice, location: escapedLocation, seller: req.session.login });
+                const newAdd = new Advertisement({ title: escapedTitle, content: escapedContent, publish_date: escapedDate, photo: req.file.filename, price: escapedPrice, location: escapedLocation, seller: req.session.user.id });
                 await newAdd.save();
                 res.json({ message: 'OK' });
             } else {
