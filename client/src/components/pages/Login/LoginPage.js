@@ -17,7 +17,6 @@ const LoginPage = () => {
     const handleSubmit = e => {
         e.preventDefault();
 
-
         const options = {
             method: 'POST',
             headers: {
@@ -27,7 +26,7 @@ const LoginPage = () => {
         };
 
         setStatus('loading');
-        fetch(`${API_AUTH_URL}/auth/login`, options)
+        fetch(`${API_AUTH_URL}/login`, options)
             .then(res => {
                 if (res.status === 200) {
                     setStatus('success');

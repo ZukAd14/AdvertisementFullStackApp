@@ -8,6 +8,21 @@ const NewAddPage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    const currentUser = localStorage.getItem('loggedInUser');
+    //const [login, setLogin] = useState('');
+    const currentUserString = currentUser;
+    const currentUserObject = JSON.parse(currentUserString);
+
+    const login = currentUserObject.login;
+
+    /*for (const key in currentUserObject) {
+        if (currentUserObject.hasOwnProperty(key)) {
+            const loginValue = currentUserObject[key];
+            console.log(loginValue); 
+            setLogin(loginValue);
+        }
+    }*/
+
     const handleAddAdvert = async advert => {
         const formData = new FormData();
         formData.append('title', advert.title);
@@ -16,7 +31,7 @@ const NewAddPage = () => {
         formData.append('photo', advert.photo);
         formData.append('price', advert.price);
         formData.append('publish_date', advert.publish_date);
-        
+        formData.append('seller', login);
         try {
             const response = await dispatch(addAdvert(formData));
 

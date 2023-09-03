@@ -45,7 +45,7 @@ export const addAdvert = (formData) => async (dispatch) => {
       body: formData,
       credentials: 'include',
     };
-    const response = await axios.post(`${API_URL}/ads`, formData, options);
+    const response = await axios.post(`${API_URL}/ads`, formData, options, { withCredentials: true });
 
     dispatch(loadAdvertsRequest());
 

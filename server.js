@@ -4,6 +4,8 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
+const cookieParser = require('cookie-parser');
+
 
 const app = express();
 
@@ -23,13 +25,6 @@ if(process.env.NODE_ENV !== 'production') {
   }));
 }
 
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
-
-const server = app.listen(process.env.PORT || 8000, () => {
-    console.log('Server is running...');
-});
-
 const NODE_ENV = process.env.NODE_ENV;
 let dbUri = '';
 
@@ -39,6 +34,15 @@ else dbUri = 'mongodb://localhost:27017/advertDB';
 
 mongoose.connect(dbUri, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
+
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+
+const server = app.listen(process.env.PORT || 8000, () => {
+    console.log('Server is running...');
+});
+
+
 
 db.once('open', () => {
   console.log('Connected to the database');
@@ -50,11 +54,22 @@ const advertisementRoutes = require('./routes/advertisement.routes');
 const authRoutes = require('./routes/auth.routes');
 //const userRoutes = require('./routes/user.routes');
 
-app.use(session({ secret: process.env.secret, store: MongoStore.create(mongoose.connection), resave: false, saveUninitialized: false, cookie: {
-    secure: process.env.NODE_ENV == 'production',
-    maxAge: 3600000,
+app.use(session({ 
+  secret: process.env.secret,
+  store: MongoStore.create({
+    mongoUrl: dbUri,
+    ttl: 3600,
+    autoRemove: 'native',
+    }), 
+    resave: false, 
+    saveUninitialized: false, 
+    cookie: {
+      secure: process.env.NODE_ENV == 'production',
+      maxAge: 3600000,
   },
 }));
+
+app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname, '/client/build')));
 app.use(express.static(path.join(__dirname, '/public')));
